@@ -18,6 +18,23 @@ export default class NewBill {
   handleChangeFile = e => {
     e.preventDefault()
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
+
+    // CHECK THE EXTENSION PROVIDE BY THE EMPLOYEE
+    const checkExtensionFormat = /(png|jpg|jpeg)/g;
+    const extension = file.name.split('.').pop()
+    console.log(extension)
+
+    // CHECK THE CONDITION - USE OF classList add and remove
+    if (extension.toLowerCase().match(checkExtensionFormat)) {
+      document.getElementById('errorFileType').classList.add('hideErrorMessage')
+
+      alert('Mauvaise extension')
+
+    } else {
+      document.getElementById('errorFileType').classList.remove('hideErrorMessage')   
+      this.document.querySelector(`input[data-testid='file']`).value = null   
+    }
+    
     const filePath = e.target.value.split(/\\/g)
     const fileName = filePath[filePath.length-1]
     const formData = new FormData()
