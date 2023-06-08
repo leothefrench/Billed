@@ -11,7 +11,7 @@ import { ROUTES, ROUTES_PATH } from "../constants/routes"
 import { localStorageMock } from "../__mocks__/localStorage.js"
 import mockStore from "../__mocks__/store"
 import { bills } from "../fixtures/bills"
-import router from "../app/Router"
+import router from "../app/Router" 
 
 jest.mock("../app/store", () => mockStore)
 

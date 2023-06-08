@@ -26,6 +26,7 @@ describe("Given I am connected as an employee", () => {
       await waitFor(() => screen.getByTestId('icon-window'))
       const windowIcon = screen.getByTestId('icon-window')
       //to-do write expect expression
+      expect(windowIcon.classList.contains("active-icon")).toBe(true) 
 
     })
     test("Then bills should be ordered from earliest to latest", () => {
@@ -36,4 +37,39 @@ describe("Given I am connected as an employee", () => {
       expect(dates).toEqual(datesSorted)
     })
   })
+    // TEST FOR CHECKING IF THE PAGE IS LOADING WHEN I AM ON THE BILL PAGE
+  describe("When the page is loading", () => {
+    test("Then I should land on the bill page", () => {
+      document.body.innerHTML = BillsUI({ 
+        data: [],
+        loading: true
+      })
+      expect(screen.getAllByText('Loading...')).toBeTruthy()
+    })
+  })
+
+  // TEST FOR THE MESSAGE ERROR WHEN WE ARE LOADING THE PAGE AND THE SERVER GIVE US BACK AN ERROR MESSAGE
+  describe("When the server send us back an error", () => {
+    test("Then the page should display and error message on the page", () => {
+      document.body.innerHTML = BillsUI({
+        data: [],
+        loading: false,
+        error: "erreur"
+      })
+      expect(screen.getAllByText('Erreur')).toBeTruthy()
+    })
+  })
+
+  //TESTING THE BUTTON FOR NEW BILL
+  // describe('When I am on Bills Page', () => {
+  //   test('The click on the new button bill should display', () => {
+  //     document.body.innerHTML = NewBill({
+
+  //     })
+  //     expect(screen.getByRole()).toBeTruthy()
+  //   })
+
+  //   // TESTING THE ICON EYE for DISPLAYING MODAL WITH IMAGE
+
+  // })
 })
