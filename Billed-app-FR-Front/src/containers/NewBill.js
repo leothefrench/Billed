@@ -20,42 +20,36 @@ export default class NewBill {
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
 
     // CHECK THE EXTENSION PROVIDE BY THE EMPLOYEE
-    const checkExtensionFormat = /(png|jpg|jpeg)/g;
+    const checkExtensionFormat = ["image/jpg", "image/jpeg", "image/png"];
     const extension = file.name.split('.').pop()
-    console.log(extension)
 
-    // CHECK THE CONDITION - USE OF classList add and remove
-    if (extension.toLowerCase().match(checkExtensionFormat)) {
-      document.getElementById('errorFileType').classList.add('hideErrorMessage')
-
-      alert('Mauvaise extension')
-
-    } else {
-      document.getElementById('errorFileType').classList.remove('hideErrorMessage')   
-      this.document.querySelector(`input[data-testid='file']`).value = null   
-    }
-    
     const filePath = e.target.value.split(/\\/g)
     const fileName = filePath[filePath.length-1]
-    const formData = new FormData()
     const email = JSON.parse(localStorage.getItem("user")).email
+
+    const formData = new FormData()
     formData.append('file', file)
     formData.append('email', email)
 
-    this.store
-      .bills()
-      .create({
-        data: formData,
-        headers: {
-          noContentType: true
-        }
-      })
-      .then(({fileUrl, key}) => {
-        console.log(fileUrl)
-        this.billId = key
-        this.fileUrl = fileUrl
-        this.fileName = fileName
-      }).catch(error => console.error(error))
+    if(checkExtensionFormat.includes(file.type)) {
+      this.store
+        .bills()
+        .create({
+          data: formData,
+          headers: {
+            noContentType: true
+          }
+        })
+        .then(({fileUrl, key}) => {
+          console.log(fileUrl)
+          this.billId = key
+          this.fileUrl = fileUrl
+          this.fileName = fileName
+        }).catch(error => console.error(error))
+      } else {
+        alert("Le format du fichier doit être en .JPG, .JPEG ou .PNG")
+        e.target.value = "";
+      }
   }
   handleSubmit = e => {
     e.preventDefault()
