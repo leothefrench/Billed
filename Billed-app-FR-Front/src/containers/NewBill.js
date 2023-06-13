@@ -20,8 +20,8 @@ export default class NewBill {
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
 
     // CHECK THE EXTENSION PROVIDE BY THE EMPLOYEE
-    const checkExtensionFormat = ["image/jpg", "image/jpeg", "image/png"];
-    const extension = file.name.split('.').pop()
+    const checkExtensionFormat = ["image/jpg", "image/jpeg", "image/png"]; // EXTENSION ADMISE
+    const extension = file.name.split('.').pop() // RECUPERATION EXTENSION
 
     const filePath = e.target.value.split(/\\/g)
     const fileName = filePath[filePath.length-1]

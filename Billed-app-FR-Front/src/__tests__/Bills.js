@@ -24,7 +24,7 @@ describe("Given I am connected as an employee", () => {
       }))
       const root = document.createElement("div")
       root.setAttribute("id", "root")
-      document.body.append(root)
+      document.body.append(root) 
       router()
       window.onNavigate(ROUTES_PATH.Bills)
       await waitFor(() => screen.getByTestId('icon-window'))
@@ -71,10 +71,12 @@ describe("Given I am connected as an employee", () => {
   describe('Given I am connected as an employee and on the bills page', () => {
     describe('When I click on the new button bill', () => {
         test('Then the  should display a new Bill page', () => {
+
           const html = BillsUI({ data: bills })
           document.body.innerHTML = html
 
-          // const store = null
+          const onNavigate = pathname => { document.body.innerHTML = ROUTES({ pathname }); };
+          Object.defineProperty(window, "localStorage", { value: localStorageMock });
 
           const allBills = new Bills({
             document,
@@ -84,7 +86,7 @@ describe("Given I am connected as an employee", () => {
           })
 
           // Mocking the function handleClickNewBill()
-          const handleClickNewBill = jest.fn(allBills.handleClickNewBill())
+          const handleClickNewBill = jest.fn(() => allBills.handleClickNewBill)
           console.log('handleClickNewBill')
           // Targeting the btn icon
           const billBtn = screen.getByTestId('btn-new-bill') // ICI BUGGY
@@ -94,7 +96,7 @@ describe("Given I am connected as an employee", () => {
           billBtn.addEventListener('click', handleClickNewBill())
           userEvent.click(billBtn)
           // The screen should show 'Envoyer une note de frais'
-          expect(screen.getAllByText('Nouvelle note de frais')).toBeTruthy()
+          expect(screen.getAllByText('Envoyer une note de frais')).toBeTruthy()
         })
     })
   })
