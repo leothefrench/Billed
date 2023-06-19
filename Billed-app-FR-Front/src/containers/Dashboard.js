@@ -124,7 +124,7 @@ export default class {
     const newBill = {
       ...bill,
       status: 'refused',
-      commentAdmin: $('#commentary2').val()
+      commentAdmin: $('#commentary2').val() 
     }
     this.updateBill(newBill)
     this.onNavigate(ROUTES_PATH['Dashboard'])
@@ -152,7 +152,7 @@ export default class {
     // [Bug hunt] - Dashboard | High
     bills.forEach(bill => $(`#status-bills-container${ this.index } #open-bill${ bill.id }`).click(e => this.handleEditTicket(e, bill, bills)));
     return bills
-
+ 
   }
 
   getBillsAllUsers = () => {

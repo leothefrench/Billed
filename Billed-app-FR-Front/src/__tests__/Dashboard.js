@@ -57,7 +57,7 @@ describe('Given I am connected as an Admin', () => {
       Object.defineProperty(window, 'localStorage', { value: localStorageMock })
       window.localStorage.setItem('user', JSON.stringify({
         type: 'Admin'
-      }))
+      })) 
 
       const dashboard = new Dashboard({
         document, onNavigate, store: null, bills:bills, localStorage: window.localStorage

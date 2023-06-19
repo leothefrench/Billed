@@ -7,19 +7,19 @@ import { screen, fireEvent, waitFor } from "@testing-library/dom" // Ajout fireE
 import { ROUTES, ROUTES_PATH } from "../constants/routes.js"
 import { localStorageMock } from "../__mocks__/localStorage.js"
 
-import { NewBillUI } from "../views/NewBillUI.js"
-import { NewBill } from "../containers/NewBill.js"
+import NewBillUI from "../views/NewBillUI.js"
+import NewBill from "../containers/NewBill.js"
 
 import mockStore from "../__mocks__/store"
-import router from "../app/Router.js"
+import router from "../app/Router.js" 
 
 // Récupération des données du store avec la fonction mock() de Jest
 jest.mock("../app/Store", () => mockStore)
 
 describe("Given I am connected as an employee", () => {
   describe("When I am on NewBill Page", () => {
-    test("Then icon of mail the vertical Layout must be highlighted", async () => {
-      // localStorage - modification de l'objet window avec la méthode defineProperties
+    test("Then icon of mail in the vertical Layout must be highlighted", async () => {
+      // localStorage - modification de l'objet window avec la méthode defineProperty
       Object.defineProperty(window, 'localStorage', { value: localStorageMock })
 
       // utilisation de l'accesseur setitem de la fonction localStorageMock
@@ -37,7 +37,7 @@ describe("Given I am connected as an employee", () => {
       // Check screen has id icon-mail and contains .active icon
       const emailIcon = screen.getByTestId('icon-mail')
       expect(emailIcon).toBeTruthy();
-      // expect(screen.getByTestId('icon-mail').classList.contains('active-icon')).toBeTruthy();
+      expect(screen.getByTestId('icon-mail').classList.contains('active-icon')).toBeTruthy();
     })
   })
 
@@ -65,14 +65,17 @@ describe("Given I am connected as an employee", () => {
           "fileUrl": "https://test.storage.tld/v0/b/billable-677b6.a…f-1.jpg?alt=media&token=4df6ed2c-12c8-42a2-b013-346c1346f732"
         }
 
+      
+
       // Ciblage de chaque champs d'entrée du formulaire & simulation du changement avec fireEvent
       const expenseField = screen.getByTestId('expense-type')
+      console.log(expenseField)
       fireEvent.change(expenseField, {target: {value: bill.type} })
       expect(expenseField.value).toBe(bill.type)
 
       const nameExpenseField = screen.getByTestId('expense-name')
       fireEvent.change(nameExpenseField, {target: {value: bill.name} })
-      expect(nameExpenseField.value).toBe(newBill.name)
+      expect(nameExpenseField.value).toBe(bill.name)
 
       const dateField = screen.getByTestId('datepicker')
       fireEvent.change(dateField, {target: {value: bill.date} })
@@ -80,15 +83,15 @@ describe("Given I am connected as an employee", () => {
 
       const amountField = screen.getByTestId('amount')
       fireEvent.change(amountField, {target: {value: bill.amount} })
-      expect(parseFloat(amountField.value)).toBe(parseFloat(bill.amount))
+      expect(parseInt(amountField.value)).toBe(parseInt(bill.amount))
 
       const vatField = screen.getByTestId('vat')
       fireEvent.change(vatField, {target: {value: bill.vat} })
-      expect(parseFloat(vatField.value)).toBe(parseFloat(bill.vat))
+      expect(parseInt(vatField.value)).toBe(parseInt(bill.vat))
 
       const pctField = screen.getByTestId('pct')
       fireEvent.change(pctField, {target: {value: bill.pct} })
-      expect(parseFloat(pctField.value)).toBe(parseFloat(bill.pct))
+      expect(parseInt(pctField.value)).toBe(parseInt(bill.pct))
 
       const commentaryField = screen.getByTestId('commentary')
       fireEvent.change(commentaryField, {target: {value: bill.commentary} })
@@ -96,7 +99,7 @@ describe("Given I am connected as an employee", () => {
 
       const onNavigate = pathname => { document.body.innerHTML =  ROUTES({ pathname})}
       const newBillForm = screen.getByTestId('form-new-bill')
-      Object.defineProperty(window, 'localstorage', { value: localStorageMock})
+      Object.defineProperty(window, 'localStorage', { value: localStorageMock})
       
       const newBill = new NewBill({document, onNavigate, store: mockStore, localStorage: window.localStorage})
 
@@ -108,6 +111,14 @@ describe("Given I am connected as an employee", () => {
       expect(fileField.files[0].name).toBe(bill.fileUrl)
       expect(fileField.files[0].type).toBe('image/png')
       expect(handleChangeFile).toHaveBeenCalled()
+
+      const handleSubmit = jest.fn(newBill.handleSubmit);
+      newBillForm.addEventListener("submit", handleSubmit);
+      fireEvent.submit(newBillForm);
+      expect(handleSubmit).toHaveBeenCalled();
     })
+
+    
+
   })
 })

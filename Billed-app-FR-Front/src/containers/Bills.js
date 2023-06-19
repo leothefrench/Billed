@@ -28,7 +28,7 @@ export default class {
   }
 
   getBills = () => {
-    const userEmail =localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).email : ''
+    const userEmail = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).email : ''
     if (this.store) {
       return this.store
       .bills()

@@ -29,7 +29,6 @@ describe("Given I am connected as an employee", () => {
       window.onNavigate(ROUTES_PATH.Bills)
       await waitFor(() => screen.getByTestId('icon-window'))
       const windowIcon = screen.getByTestId('icon-window')
-      console.log(windowIcon)
       //to-do write expect expression
       expect(windowIcon.classList.contains("active-icon")).toBe(true) 
 
@@ -41,7 +40,30 @@ describe("Given I am connected as an employee", () => {
       const datesSorted = [...dates].sort(antiChrono)
       expect(dates).toEqual(datesSorted)
     })
+
+    test("Then a btn new bill button should be displayed at the top left", () => {
+      const newBillBtn = screen.getByTestId('btn-new-bill')
+      console.log(newBillBtn)
+      expect(newBillBtn.classList.contains('btn')).toBeTruthy()
+    })
+
+    test('Should have the right url', () => {
+      Object.defineProperty(window, 'localStorage', {value: localStorage})
+      window.localStorage.setItem('user', JSON.stringify({type: 'Employee'}))
+
+      const root = document.createElement('div')
+      root.setAttribute('id', 'root')
+      document.body.append(root)
+
+      router()
+
+      window.onNavigate(ROUTES_PATH.Bills)
+      const endOfLocation = document.location.hash
+      expect(endOfLocation).toEqual('#employee/bills')
+    })
   })
+
+
     // TEST FOR CHECKING IF THE PAGE IS LOADING WHEN I AM ON THE BILL PAGE
   describe("When the page is loading", () => {
     test("Then I should land on the bill page", () => {
@@ -50,7 +72,7 @@ describe("Given I am connected as an employee", () => {
         loading: true
       })
       expect(screen.getAllByText('Loading...')).toBeTruthy()
-    })
+    })   
   })
 
   // TEST FOR THE MESSAGE ERROR WHEN WE ARE LOADING THE PAGE AND THE SERVER GIVE US BACK AN ERROR MESSAGE
@@ -87,11 +109,8 @@ describe("Given I am connected as an employee", () => {
 
           // Mocking the function handleClickNewBill()
           const handleClickNewBill = jest.fn(() => allBills.handleClickNewBill)
-          console.log('handleClickNewBill')
           // Targeting the btn icon
           const billBtn = screen.getByTestId('btn-new-bill') // ICI BUGGY
-          console.log(billBtn)
-          console.log(typeof billBtn)
           // Managing of Event and Query Fire
           billBtn.addEventListener('click', handleClickNewBill())
           userEvent.click(billBtn)
