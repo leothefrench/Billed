@@ -39,6 +39,21 @@ describe("Given I am connected as an employee", () => {
       expect(emailIcon).toBeTruthy();
       expect(screen.getByTestId('icon-mail').classList.contains('active-icon')).toBeTruthy();
     })
+
+    test("Then the inputs forms should be displayed on the web page", () => {
+      document.body.innerHTML = NewBillUI()
+      const expenseField = screen.getByTestId('expense-type')
+      expect(expenseField).toBeDefined()
+      expect(expenseField).toBeTruthy()
+
+      const nameExpenseField = screen.getByTestId('expense-name')
+      expect(nameExpenseField).toBeDefined()
+      expect(nameExpenseField).toBeTruthy()
+
+      const dateField = screen.getByTestId('datepicker')
+      expect(dateField).toBeDefined()
+      expect(dateField).toBeTruthy()
+    })
   })
 
   // TEST D'INTEGRATION POST
