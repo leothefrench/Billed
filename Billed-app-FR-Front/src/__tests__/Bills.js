@@ -13,7 +13,6 @@ import mockStore from "../__mocks__/store"
 import router from "../app/Router.js";
 
 import { NewBill } from '../containers/NewBill.js'
-// import NewBillUI from "../views/BillsUI.js"
 
 jest.mock("../app/Store", () => mockStore)
 
@@ -31,15 +30,11 @@ describe("Given I am connected as an employee", () => {
 
       window.onNavigate(ROUTES_PATH.Bills)
       // On simule la création d'une nouvelle Bill
-      const newBills = new Bills({ document, onNavigate, store:mockStore, localStorage:localStorageMock }) // ICI BUGGY
+      const newBills = new Bills({ document, onNavigate, store:mockStore, localStorage:localStorageMock })
       console.log(newBills);
 
-      
-      
       const listBills = await newBills.getBills()
-
-      expect(listBills.length).toEqual(4)
-     
+      expect(listBills.length).toEqual(4) 
     })
 
     test("Get bills without the mock store", async () => {
