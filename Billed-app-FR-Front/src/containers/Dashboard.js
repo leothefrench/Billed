@@ -107,7 +107,7 @@ export default class {
     }
     $('#icon-eye-d').click(this.handleClickIconEye)
     $('#btn-accept-bill').click((e) => this.handleAcceptSubmit(e, bill))
-    $('#btn-refuse-bill').click((e) => this.handleRefuseSubmit(e, bill))
+    $('#btn-refuse-bill').click((e) => this.handleRefuseSubmit(e, bill)) 
   }
 
   handleAcceptSubmit = (e, bill) => {

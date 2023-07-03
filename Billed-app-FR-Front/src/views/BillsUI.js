@@ -18,7 +18,7 @@ const row = (bill) => {
     </tr>
     `)
   }
-
+ 
 const rows = (data) => {
   if(data && data.length) {
     data.sort(function (a,b) {

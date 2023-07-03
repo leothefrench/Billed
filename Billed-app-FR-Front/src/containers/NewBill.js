@@ -17,7 +17,7 @@ export default class NewBill {
   }
   handleChangeFile = e => {
     e.preventDefault()
-    const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
+    const file = this.document.querySelector(`input[data-testid="file"]`).files[0] 
 
     // CHECK THE EXTENSION PROVIDE BY THE EMPLOYEE
     const checkExtensionFormat = ["image/jpg", "image/jpeg", "image/png"]; // EXTENSION ADMISE

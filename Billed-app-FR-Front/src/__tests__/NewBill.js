@@ -54,7 +54,7 @@ describe("Given I am connected as an employee", () => {
       expect(dateField).toBeDefined()
       expect(dateField).toBeTruthy()
     })
-  })
+  }) 
 
   // TEST D'INTEGRATION POST
   describe("When I am on the newBill page, I fill the form and submit", () => {
